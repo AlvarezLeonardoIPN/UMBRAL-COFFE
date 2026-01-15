@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout | UMBRAL</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-mark">⚜</span>
+        <span class="logo-text">UMBRAL</span>
+      </div>
+
+      <nav class="nav">
+        <a href="index.html">Inicio</a>
+        <a href="tienda.html">Tienda</a>
+        <a href="mis_pedidos.html" id="nav-mis-pedidos">Mis pedidos</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="carrito.html" class="btn btn-outline">Carrito</a>
+
+        <div class="umbral-account" id="umbral-account" style="display:none;">
+          <button type="button" class="umbral-account-btn" id="umbral-account-btn">
+            Hola, <span id="umbral-account-name">Usuario</span>
+            <span class="umbral-caret">▾</span>
+          </button>
+
+          <div class="umbral-dropdown" id="umbral-dropdown" style="display:none;">
+            <a href="mis_pedidos.html" id="umbral-link-pedidos">Mis pedidos</a>
+            <a href="cuenta.html" id="umbral-link-cuenta">Mi cuenta</a>
+            <a href="admin.html" id="umbral-link-admin" style="display:none;">Panel</a> 
+            
+            <div class="umbral-sep"></div>
+
+            <button type="button" class="umbral-logout" id="umbral-logout">
+              Cerrar sesion
+            </button>
+          </div>
+        </div>
+
+        <a href="login.html" class="link-login" id="umbral-login-link">Login</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero hero-login">
+      <div class="container hero-content">
+        <p class="overline">CHECKOUT</p>
+        <h1>Confirmar compra</h1>
+        <p class="hero-subtitle">
+          Selecciona tu direccion, tu metodo de pago y confirma tu pedido.
+        </p>
+      </div>
+    </section>
+
+    <section class="login-section">
+      <div class="container login-layout">
+
+        <div class="login-info">
+          <h2>Resumen</h2>
+          <p>Revisa tus productos antes de confirmar.</p>
+
+          <div id="summary-items" style="margin-top:12px"></div>
+
+          <div style="margin-top:12px">
+            <p>Total:</p>
+            <p class="cart-total" id="summary-total">$0.00</p>
+          </div>
+        </div>
+
+        <div class="login-form-wrapper">
+          <div class="login-form">
+
+            <div class="form-group">
+              <label>Direccion de envio</label>
+              <select id="address-select" style="width:100%; padding:12px; border-radius:10px; background:#1a1a1a; color:white; border:1px solid #333;">
+                <option value="">Cargando direcciones...</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+              <label style="color:#c5a059; font-size:14px; letter-spacing:1px;">MÉTODO DE PAGO</label>
+              
+              <div style="display: flex; align-items: flex-end; gap: 10px; margin-top: 8px;">
+                <div style="flex: 1;">
+                    <label style="font-size: 11px; color:#aaa;">Selecciona Tarjeta</label>
+                    <select id="payment-select" style="width:100%; padding:12px; border-radius:10px; background:#1a1a1a; color:white; border:1px solid #333;">
+                        <option value="">Cargando metodos...</option>
+                    </select>
+                </div>
+                <div style="width: 80px;">
+                    <label style="font-size: 11px; color:#aaa;">CVV</label>
+                    <input id="checkout-cvv" type="password" maxlength="4" placeholder="123" 
+                           style="width: 100%; padding:12px; border-radius:10px; text-align: center; border: 1px solid rgba(212,175,55,0.5); background:#000; color:#fff;">
+                </div>
+              </div>
+              <p style="opacity:.6; margin-top:8px; font-size:11px; font-style: italic;">
+                ℹ Ingresa el código de seguridad (CVV) para autorizar la transacción.
+              </p>
+            </div>
+
+            <div class="form-group">
+              <label>Notas (opcional)</label>
+              <textarea id="notes" rows="3" style="width:100%; padding:12px; border-radius:10px; background:#1a1a1a; color:white; border:1px solid #333;" placeholder="Ej: Entregar por la tarde"></textarea>
+            </div>
+
+            <p id="chk-error" class="mensaje-error" style="display:none;"></p>
+            <p id="chk-success" class="mensaje-exito" style="display:none;"></p>
+
+            <div style="display:flex; gap:10px; margin-top:12px">
+              <button id="btn-validate-and-confirm" class="btn-primario" type="button">Confirmar compra</button>
+              <button id="btn-cancel" class="btn btn-outline" type="button">Cancelar</button>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <p>&copy; 2026 UMBRAL. Arquitectura liquida y formacion en barra.</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/auth_ui.js"></script>
+  <script src="assets/js/guards.js"></script>
+  <script>
+    // 1. Verificamos sesión
+    guardRequireLogin("checkout.html");
+    
+    // 2. BLINDAJE: Expulsamos al Staff (Admin/Inventario) si intentan entrar por URL
+    guardRestrictStaffFromCheckout();
+  </script>
+  <script src="assets/js/cart_ui.js"></script>
+  <script src="assets/js/checkout.js"></script>
+
+</body>
+</html>

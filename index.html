@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>UMBRAL | Café y Experiencias Sensoriales</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo">
+                <span class="logo-mark">⚜</span>
+                <span class="logo-text">UMBRAL</span>
+            </div>
+            <nav class="nav">
+                <a href="#inicio">Inicio</a>
+                <a href="#somos">Qué somos</a>
+                <a href="#servicios">Servicios</a>
+                <a href="#cursos">Cursos</a>
+                <a href="#contacto">Contacto</a>
+            </nav>
+
+            <div class="header-actions">
+                <a href="tienda.html" class="btn btn-outline">Tienda en linea</a>
+
+                <div class="umbral-account" id="umbral-account" style="display:none;">
+                    <button type="button" class="umbral-account-btn" id="umbral-account-btn">
+                        Hola, <span id="umbral-account-name">Usuario</span>
+                        <span class="umbral-caret">▾</span>
+                    </button>
+
+                    <div class="umbral-dropdown" id="umbral-dropdown" style="display:none;">
+                        <a href="mis_pedidos.html" id="umbral-link-pedidos">Mis pedidos</a>
+                        <a href="cuenta.html" id="umbral-link-cuenta">Mi cuenta</a>
+                        <a href="admin.html" id="umbral-link-inventarios" style="display:none;">Inventarios</a>
+                        <a href="admin.html" id="umbral-link-admin" style="display:none;">Administrador</a>
+                        <div class="umbral-sep"></div>
+                        <button type="button" class="umbral-logout" id="umbral-logout">Cerrar sesion</button>
+                    </div>
+                </div>
+
+                <a href="login.html" class="link-login" id="umbral-login-link">Login</a>
+            </div>
+        </div>
+    </header>
+
+    <main id="inicio">
+        <section class="hero hero-index">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <p class="hero-subtitle">Café de los Altos de Chiapas</p>
+                <h1 class="hero-title">UMBRAL</h1>
+                <p class="hero-tagline">
+                    Arquitectura líquida, experiencias sensoriales y formación profesional en barra.
+                </p>
+                <div class="hero-actions">
+                    <a href="#cursos" class="btn">Ver cursos</a>
+                    <a href="tienda.html" class="btn btn-outline">Ver café</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="somos" class="section section-somos">
+            <div class="section-inner">
+                <div class="section-header">
+                    <h2>Qué somos y qué hacemos</h2>
+                    <span class="section-divider"></span>
+                </div>
+                <div class="somos-grid">
+                    <p class="somos-text">
+                        En <span class="text-highlight">UMBRAL</span>, diseñamos experiencias sensoriales.
+                        Trabajamos con café de los altos de Chiapas, de especialidad, evaluado cuidadosamente
+                        con <strong>87 puntos por la SCA</strong> y cultivado con paciencia, precisión y un
+                        profundo respeto por su origen.
+                    </p>
+                    <p class="somos-text">
+                        Cada grano deja una huella, y cada taza representa una
+                        <span class="text-highlight">arquitectura líquida</span> que trasciende el sabor.
+                        Formamos baristas, diseñamos barras y curamos cafés para quienes viven el oficio como
+                        un puente entre técnica, sensibilidad y hospitalidad.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="servicios" class="section section-servicios">
+            <div class="section-inner">
+                <div class="section-header">
+                    <h2>Servicios</h2>
+                    <span class="section-divider"></span>
+                </div>
+                <div class="cards-grid">
+                    <article class="card">
+                        <h3>Cursos & Capacitaciones</h3>
+                        <p>Programas de formación en operación de barra, brew bar y arte latte.</p>
+                        <a href="cursos.html" class="card-link">Explorar cursos →</a>
+                    </article>
+
+                    <article class="card">
+                        <h3>Experiencias sensoriales</h3>
+                        <p>Catas guiadas y maridajes para conectar con el origen del café.</p>
+                        <a href="#contacto" class="card-link">Solicitar información →</a>
+                    </article>
+
+                    <article class="card">
+                        <h3>Café de especialidad</h3>
+                        <p>Cafés de origen diseñados para barra profesional y consumo en casa.</p>
+                        <a href="tienda.html" class="card-link">Entrar a la tienda →</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="cursos" class="section section-dark">
+            <div class="section-inner">
+                <div class="section-header">
+                    <h2>Cursos UMBRAL</h2>
+                    <span class="section-divider section-divider-gold"></span>
+                </div>
+                <div class="cards-grid">
+                    <article class="card card-outline">
+                        <h3>Operación en barra</h3>
+                        <p>Eficiencia y servicio consistente en entornos de alta demanda.</p>
+                        <span class="pill">Nivel: Intermedio</span>
+                    </article>
+                    <article class="card card-outline">
+                        <h3>Brew Bar & Métodos</h3>
+                        <p>Extracción, recetas y protocolos de café filtrado.</p>
+                        <span class="pill">Nivel: Abierto</span>
+                    </article>
+                </div>
+                <div class="section-cta" style="text-align: center; margin-top: 30px;">
+                    <a href="cursos.html" class="btn btn-gold">Ver todos los cursos</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="contacto" class="section section-contacto">
+            <div class="section-inner">
+                <div class="section-header">
+                    <h2>Contacto</h2>
+                    <span class="section-divider"></span>
+                </div>
+                <div class="contacto-grid">
+                    <div>
+                        <p>¿Quieres llevar UMBRAL a tu barra? Escríbenos.</p>
+                        <p class="contacto-mail">Correo: <a href="mailto:contacto@umbral.cafe">contacto@umbral.cafe</a></p>
+                        <div class="social-links">
+                            <a href="#">Instagram</a> | <a href="#">Facebook</a> | <a href="#">TikTok</a>
+                        </div>
+                    </div>
+                    <form class="contact-form">
+                        <input type="text" placeholder="Nombre completo">
+                        <input type="email" placeholder="Correo electrónico">
+                        <textarea rows="4" placeholder="Cuéntanos tu proyecto"></textarea>
+                        <button type="submit" class="btn btn-gold">Enviar mensaje</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <p>&copy; 2025 UMBRAL. Arquitectura líquida y formación en barra.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/auth_ui.js"></script>
+</body>
+</html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tienda UMBRAL | Cafe de especialidad</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+
+  <style>
+    :root{
+      --bg: #070707;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.08);
+      --stroke: rgba(255,255,255,.12);
+      --stroke2: rgba(255,255,255,.18);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.70);
+      --muted2: rgba(255,255,255,.55);
+      --gold: #caa23a;
+      --gold2:#e0c36a;
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --r-xl: 26px;
+      --r-lg: 20px;
+      --r-md: 14px;
+      --max: 1180px;
+    }
+
+    body{
+      background: radial-gradient(900px 420px at 50% 18%, rgba(202,162,58,.18), rgba(0,0,0,0) 60%),
+                  radial-gradient(900px 500px at 20% 50%, rgba(255,255,255,.06), rgba(0,0,0,0) 55%),
+                  var(--bg);
+      color: var(--text);
+    }
+
+    /* Contenedor consistente (sin pelear con tu style.css) */
+    .container{
+      width: min(94vw, var(--max));
+      margin-inline: auto;
+    }
+
+    /* HERO PRO */
+    .hero-tienda{
+      padding: 80px 0 42px;
+      text-align: center;
+      background: transparent;
+    }
+    .hero-tienda .overline{
+      letter-spacing: .35em;
+      font-size: 12px;
+      color: var(--muted2);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .hero-tienda h1{
+      margin: 0;
+      font-size: clamp(40px, 6vw, 72px);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      line-height: 1.05;
+    }
+    .hero-tienda .hero-subtitle{
+      margin: 14px auto 0;
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 16px;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+    }
+
+    /* LAYOUT TIENDA */
+    .shop{
+      padding: 28px 0 80px;
+    }
+
+    /* Barra de controles como “panel” centrado */
+    .tienda-controls{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      padding: 18px;
+      border-radius: var(--r-xl);
+      background: linear-gradient(180deg, var(--panel2), var(--panel));
+      border: 1px solid var(--stroke);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 14px;
+      z-index: 5;
+    }
+
+    /* Categorías estilo “chips” */
+    #category-list{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    .cat-btn{
+      padding: 10px 14px;
+      border: 1px solid var(--stroke);
+      border-radius: 999px;
+      background: rgba(0,0,0,.25);
+      color: var(--text);
+      cursor: pointer;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      white-space: nowrap;
+      font-size: 13px;
+      letter-spacing: .04em;
+    }
+    .cat-btn:hover{
+      transform: translateY(-1px);
+      border-color: var(--stroke2);
+      background: rgba(255,255,255,.08);
+    }
+    .cat-btn.active{
+      background: rgba(202,162,58,.18);
+      border-color: rgba(202,162,58,.55);
+      color: var(--text);
+    }
+
+    /* Search + order */
+    .controls-row{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+    }
+    #search-input, #order-select{
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: rgba(0,0,0,.35);
+      color: var(--text);
+      outline: none;
+    }
+    #search-input::placeholder{ color: rgba(255,255,255,.40); }
+    #search-input:focus, #order-select:focus{
+      border-color: rgba(202,162,58,.55);
+      box-shadow: 0 0 0 3px rgba(202,162,58,.16);
+    }
+    #order-select{
+      border-radius: 14px;
+      cursor: pointer;
+    }
+
+    /* Sección productos centrada y con ancho controlado */
+    .productos{
+      margin-top: 26px;
+    }
+    .productos h2{
+      margin: 18px 0 16px;
+      font-size: 28px;
+      letter-spacing: .02em;
+    }
+
+    /* GRID PRO centrado */
+    .product-grid{
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    /* Card pro: ocupa 12->6->4 columnas según pantalla */
+    .product-card{
+      grid-column: span 12;
+      border-radius: var(--r-xl);
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
+      border: 1px solid var(--stroke);
+      box-shadow: 0 10px 30px rgba(0,0,0,.42);
+      transform: translateZ(0);
+      transition: transform .15s ease, border-color .15s ease, background .15s ease;
+      padding: 18px 18px 16px;
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .product-card:hover{
+      transform: translateY(-3px);
+      border-color: rgba(202,162,58,.35);
+      background: linear-gradient(180deg, rgba(202,162,58,.12), rgba(255,255,255,.05));
+    }
+
+    /* Tipografía interna (compatible con tu JS actual) */
+    .product-name{
+      font-size: 18px;
+      margin: 0 0 6px;
+      line-height: 1.2;
+    }
+    .product-origin{
+      margin: 0 0 8px;
+      font-size: 12px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--gold2);
+      opacity: .95;
+    }
+    .product-details{
+      margin: 0 0 10px;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+    .product-grams{
+      margin: 0 0 8px;
+      color: var(--muted2);
+      font-size: 13px;
+    }
+    .product-price{
+      margin: 0 0 12px;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: .02em;
+    }
+
+    /* Botón pro */
+    .btn-primario.btn-add-cart{
+      width: 100%;
+      border: 0;
+      border-radius: 14px;
+      padding: 12px 14px;
+      background: linear-gradient(90deg, var(--gold), var(--gold2));
+      color: #111;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform .12s ease, filter .12s ease;
+      margin-top: auto;
+    }
+    .btn-primario.btn-add-cart:hover{
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+    }
+
+    /* Responsivo */
+    @media (min-width: 760px){
+      .controls-row{
+        grid-template-columns: 1.2fr .6fr;
+      }
+      .product-card{ grid-column: span 6; }
+      .productos h2{ font-size: 32px; }
+    }
+    @media (min-width: 1100px){
+      .product-card{ grid-column: span 4; }
+    }
+
+    /* Evitar “espacios raros” arriba si tu header es fijo */
+    main{ padding-top: 0; }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-mark">⚜</span>
+        <span class="logo-text">UMBRAL</span>
+      </div>
+
+      <nav class="nav">
+        <a href="index.html">Inicio</a>
+        <a href="cursos.html">Cursos</a>
+        <a href="tienda.html">Tienda</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="carrito.html" class="btn btn-outline">Carrito</a>
+
+        <div class="umbral-account" id="umbral-account" style="display:none;">
+          <button type="button" class="umbral-account-btn" id="umbral-account-btn">
+            Hola, <span id="umbral-account-name">Usuario</span>
+            <span class="umbral-caret">▾</span>
+          </button>
+
+          <div class="umbral-dropdown" id="umbral-dropdown" style="display:none;">
+            <a href="mis_pedidos.html">Mis pedidos</a>
+            <a href="cuenta.html">Mi cuenta</a>
+            <a href="admin.html" id="umbral-link-admin" style="display:none;">Administrador</a>
+            <div class="umbral-sep"></div>
+            <button type="button" class="umbral-logout" id="umbral-logout">Cerrar sesion</button>
+          </div>
+        </div>
+
+        <a href="login.html" class="link-login" id="umbral-login-link">Login</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero hero-tienda">
+      <div class="container hero-content">
+        <p class="overline">TIENDA EN LINEA</p>
+        <h1>CAFE TOSTADO<br/>UMBRAL</h1>
+        <p class="hero-subtitle">Cafes de especialidad de los Altos de Chiapas.</p>
+      </div>
+    </section>
+
+    <section class="shop container">
+      <div class="tienda-controls">
+        <div id="category-list"></div>
+
+        <div class="controls-row">
+          <input type="text" id="search-input" placeholder="Buscar producto..." />
+          <select id="order-select">
+            <option value="az">Nombre A-Z</option>
+            <option value="price-asc">Precio: Menor a Mayor</option>
+            <option value="price-desc">Precio: Mayor a Menor</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="productos">
+        <h2>Nuestra Selección</h2>
+        <div id="product-list" class="product-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/js/cart_ui.js"></script>
+  <script src="assets/js/auth_ui.js"></script>
+  <script src="assets/js/tienda_v2.js"></script>
+</body>
+</html>

@@ -1,31 +1,75 @@
 const jwt = require("jsonwebtoken");
 
+const SECRET = process.env.JWT_SECRET || "una_frase_larga_y_secreta_umbral_2025";
+
+
+
+// 1. Función para validar que el usuario está logueado (soporta PDF por URL)
+
 const verificarToken = (req, res, next) => {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
 
-  if (!token) {
-    return res.status(403).json({ error: "Acceso denegado. Token requerido." });
-  }
+    let token = req.header("Authorization");
 
-  try {
-    // Usamos la misma clave que en tus rutas de auth
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // Guardamos los datos del usuario (id, role, etc)
-    next();
-  } catch (err) {
-    console.error("Error validando token:", err.message);
-    return res.status(401).json({ error: "Token inválido o expirado." });
-  }
+    
+
+    if (token) {
+
+        token = token.replace("Bearer ", "");
+
+    } 
+
+    else if (req.query.token) {
+
+        token = req.query.token;
+
+    }
+
+
+
+    if (!token) {
+
+        return res.status(401).json({ error: "Acceso denegado. Token requerido." });
+
+    }
+
+
+
+    try {
+
+        const verificado = jwt.verify(token, SECRET);
+
+        req.user = verificado;
+
+        next();
+
+    } catch (e) {
+
+        res.status(400).json({ error: "Token no válido o expirado." });
+
+    }
+
 };
+
+
+
+// 2. Función para validar el rol (Admin/Cliente/Inventario) - LA QUE FALTABA
 
 const requiereRol = (rolesPermitidos) => {
-  return (req, res, next) => {
-    if (!req.user || !rolesPermitidos.includes(req.user.role)) {
-      return res.status(403).json({ error: "No tienes permiso para esta acción." });
-    }
-    next();
-  };
+
+    return (req, res, next) => {
+
+        if (!req.user || !rolesPermitidos.includes(req.user.role)) {
+
+            return res.status(403).json({ error: "No tienes permisos para realizar esta acción." });
+
+        }
+
+        next();
+
+    };
+
 };
+
+
 
 module.exports = { verificarToken, requiereRol };

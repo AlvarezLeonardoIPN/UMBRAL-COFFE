@@ -1,425 +1,851 @@
 <!DOCTYPE html>
+
 <html lang="es">
+
 <head>
+
   <meta charset="UTF-8" />
+
   <title>Cursos UMBRAL</title>
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <link rel="stylesheet" href="assets/css/style.css" />
 
+
+
   <style>
+
     /* --- Select estilo UMBRAL --- */
+
     .umbral-select {
+
       position: relative;
+
       width: 100%;
+
       margin-top: 6px;
+
     }
+
+
 
     .umbral-select select {
+
       width: 100%;
+
       appearance: none;
+
       -webkit-appearance: none;
+
       -moz-appearance: none;
+
       background: rgba(255,255,255,0.02);
+
       border: 1px solid rgba(212,175,55,0.20);
+
       color: #eaeaea;
+
       padding: 14px 44px 14px 16px;
+
       border-radius: 14px;
+
       outline: none;
+
       font-size: 15px;
+
       letter-spacing: 0.2px;
+
       transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+
     }
+
+
 
     .umbral-select select:focus {
+
       border-color: rgba(212,175,55,0.55);
+
       box-shadow: 0 0 0 4px rgba(212,175,55,0.10);
+
       background: rgba(255,255,255,0.03);
+
     }
+
+
 
     .umbral-select .caret {
+
       position: absolute;
+
       right: 14px;
+
       top: 50%;
+
       transform: translateY(-50%);
+
       pointer-events: none;
+
       color: rgba(212,175,55,0.85);
+
       font-size: 14px;
+
     }
+
+
 
     .form-hint {
+
       margin-top: 10px;
+
       opacity: 0.85;
+
       font-size: 13px;
+
       color: rgba(255,255,255,0.65);
+
     }
+
+
 
     /* --- Modal Gracias --- */
+
     .umbral-modal-backdrop {
+
       position: fixed;
+
       inset: 0;
+
       background: rgba(0,0,0,0.70);
+
       display: none;
+
       align-items: center;
+
       justify-content: center;
+
       z-index: 9999;
+
       padding: 18px;
+
     }
+
+
 
     .umbral-modal {
+
       width: 100%;
+
       max-width: 520px;
+
       border-radius: 18px;
+
       background: rgba(10,10,10,0.92);
+
       border: 1px solid rgba(212,175,55,0.22);
+
       box-shadow: 0 24px 80px rgba(0,0,0,0.65);
+
       overflow: hidden;
+
     }
+
+
 
     .umbral-modal-header {
+
       padding: 18px 18px 10px 18px;
+
       border-bottom: 1px solid rgba(212,175,55,0.12);
+
       display: flex;
+
       align-items: center;
+
       justify-content: space-between;
+
       gap: 12px;
+
     }
+
+
 
     .umbral-modal-title {
+
       margin: 0;
+
       font-size: 16px;
+
       letter-spacing: 0.6px;
+
       color: #f2f2f2;
+
       text-transform: uppercase;
+
     }
+
+
 
     .umbral-modal-close {
+
       background: transparent;
+
       border: 1px solid rgba(212,175,55,0.25);
+
       color: rgba(212,175,55,0.9);
+
       border-radius: 12px;
+
       padding: 8px 10px;
+
       cursor: pointer;
+
       transition: transform .15s ease, background .15s ease;
+
     }
+
     .umbral-modal-close:hover { background: rgba(212,175,55,0.08); transform: translateY(-1px); }
 
+
+
     .umbral-modal-body {
+
       padding: 16px 18px 18px 18px;
+
       color: rgba(255,255,255,0.80);
+
       line-height: 1.5;
+
     }
+
+
 
     .umbral-socials {
+
       display: flex;
+
       flex-wrap: wrap;
+
       gap: 10px;
+
       margin-top: 12px;
+
     }
+
+
 
     .umbral-socials a {
+
       display: inline-flex;
+
       align-items: center;
+
       justify-content: center;
+
       padding: 10px 12px;
+
       border-radius: 14px;
+
       border: 1px solid rgba(212,175,55,0.22);
+
       color: rgba(212,175,55,0.95);
+
       text-decoration: none;
+
       transition: background .15s ease, transform .15s ease;
+
     }
+
     .umbral-socials a:hover { background: rgba(212,175,55,0.08); transform: translateY(-1px); }
 
+
+
     .umbral-toast {
+
       margin-top: 10px;
+
       display: none;
+
       padding: 12px 14px;
+
       border-radius: 14px;
+
       border: 1px solid rgba(255,80,80,0.35);
+
       background: rgba(255,80,80,0.08);
+
       color: rgba(255,220,220,0.95);
+
       font-size: 13px;
+
     }
+
     
+
     /* Estilo para botón deshabilitado */
+
     .btn:disabled {
+
       opacity: 0.5;
+
       cursor: not-allowed;
+
       filter: grayscale(1);
+
     }
+
   </style>
+
 </head>
+
+
 
 <body>
 
+
+
   <header class="header">
+
     <div class="header-inner">
+
       <div class="logo">
+
         <span class="logo-mark">⚜</span>
+
         <span class="logo-text">UMBRAL</span>
+
       </div>
+
+
 
       <nav class="nav">
+
         <a href="index.html">Inicio</a>
+
         <a href="#cursos">Cursos</a>
+
         <a href="#inscripcion">Inscripción</a>
+
       </nav>
 
+
+
       <div class="header-actions">
+
         <a href="tienda.html" class="btn btn-outline">Tienda en linea</a>
 
+
+
         <div class="umbral-account" id="umbral-account" style="display:none;">
+
           <button type="button" class="umbral-account-btn" id="umbral-account-btn">
+
             Hola, <span id="umbral-account-name">Usuario</span>
+
             <span class="umbral-caret">▾</span>
+
           </button>
 
+
+
           <div class="umbral-dropdown" id="umbral-dropdown" style="display:none;">
+
             <a href="mis_pedidos.html">Mis pedidos</a>
+
             <a href="cuenta.html">Mi cuenta</a>
+
             <a href="inventarios.html" id="umbral-link-inventarios" style="display:none;">Inventarios</a>
+
             <a href="admin.html" id="umbral-link-admin" style="display:none;">Administrador</a>
+
             <div class="umbral-sep"></div>
+
             <button type="button" class="umbral-logout" id="umbral-logout">Cerrar sesion</button>
+
           </div>
+
         </div>
+
+
 
         <a href="login.html" class="link-login" id="umbral-login-link">Login</a>
+
       </div>
+
     </div>
+
   </header>
 
+
+
   <section class="hero hero-small">
+
     <div class="hero-overlay"></div>
+
     <div class="hero-content">
+
       <p class="hero-subtitle">Formación profesional</p>
+
       <h1 class="hero-title">Cursos UMBRAL</h1>
+
       <p class="hero-tagline">Operación en barra, brew bar y arte latte para elevar tu oficio.</p>
+
     </div>
+
   </section>
+
+
 
   <section id="cursos" class="section section-dark">
+
     <div class="section-inner">
+
       <div class="section-header">
+
         <h2>Cursos disponibles</h2>
+
         <span class="section-divider section-divider-gold"></span>
+
       </div>
+
+
 
       <div class="cards-grid">
+
         <article class="card card-outline">
+
           <h3>Operación en Barra</h3>
+
           <p>Flujo, consistencia, eficiencia y control del espresso.</p>
+
           <p><strong>Duración:</strong> 8 horas</p>
+
           <p><strong>Nivel:</strong> Intermedio</p>
+
           <a class="btn btn-gold btn-inscripcion-trigger" href="#inscripcion" data-curso="Operación en Barra">Inscribirme</a>
+
         </article>
 
+
+
         <article class="card card-outline">
+
           <h3>Brew Bar & Métodos</h3>
+
           <p>Técnica, extracción, recetas y experiencia sensorial.</p>
+
           <p><strong>Duración:</strong> 6 horas</p>
+
           <p><strong>Nivel:</strong> Abierto</p>
+
           <a class="btn btn-gold btn-inscripcion-trigger" href="#inscripcion" data-curso="Brew Bar & Métodos">Inscribirme</a>
+
         </article>
 
+
+
         <article class="card card-outline">
+
           <h3>Arte Latte & Texturas</h3>
+
           <p>Emulsión, microespuma y vertidos estéticos.</p>
+
           <p><strong>Duración:</strong> 4 horas</p>
+
           <p><strong>Nivel:</strong> Creativo</p>
+
           <a class="btn btn-gold btn-inscripcion-trigger" href="#inscripcion" data-curso="Arte Latte & Texturas">Inscribirme</a>
+
         </article>
+
       </div>
+
     </div>
+
   </section>
 
+
+
   <section id="inscripcion" class="section section-somos">
+
     <div class="section-inner">
+
       <div class="section-header">
+
         <h2>Inscripción</h2>
+
         <span class="section-divider"></span>
+
       </div>
 
+
+
       <form class="contact-form" id="formCursos" autocomplete="on">
+
         <input type="text" id="nombre" placeholder="Nombre completo" />
+
         <input type="email" id="correo" placeholder="Correo electrónico" />
+
         <input type="tel" id="telefono" placeholder="Número de teléfono" />
 
+
+
         <div class="umbral-select">
+
           <select id="cursoSeleccionado">
+
             <option value="">Selecciona un curso</option>
+
             <option value="Operación en Barra">Operación en Barra</option>
+
             <option value="Brew Bar & Métodos">Brew Bar & Métodos</option>
+
             <option value="Arte Latte & Texturas">Arte Latte & Texturas</option>
+
           </select>
+
           <span class="caret">▾</span>
+
         </div>
+
+
 
         <div class="form-hint" id="staff-msg">Tu inscripción queda registrada y te contactaremos para confirmar fecha y cupo.</div>
 
+
+
         <button type="submit" class="btn btn-gold" id="btnEnviarInscripcion">
+
           Enviar inscripción
+
         </button>
 
+
+
         <div class="umbral-toast" id="toastError"></div>
+
       </form>
+
     </div>
+
   </section>
 
+
+
   <div class="umbral-modal-backdrop" id="modalGracias">
+
     <div class="umbral-modal" role="dialog" aria-modal="true" aria-labelledby="tituloGracias">
+
       <div class="umbral-modal-header">
+
         <h3 class="umbral-modal-title" id="tituloGracias">Gracias por registrarte</h3>
+
         <button class="umbral-modal-close" id="cerrarModal" type="button">Cerrar</button>
+
       </div>
+
       <div class="umbral-modal-body">
+
         Nos pondremos en contacto contigo muy pronto para confirmar detalles.
+
         <div class="umbral-socials">
+
           <a href="#" target="_blank" rel="noopener">Instagram</a>
+
           <a href="#" target="_blank" rel="noopener">Facebook</a>
+
           <a href="#" target="_blank" rel="noopener">TikTok</a>
+
         </div>
+
       </div>
+
     </div>
+
   </div>
 
+
+
   <script src="assets/js/auth_ui.js"></script>
+
   <script src="assets/js/validaciones.js"></script>
+
   <script>
-    const API_BASE = 'http://127.0.0.1:3000';
+
+    // CAMBIO 1: IP ACTUALIZADA
+
+    const API_BASE = 'http://3.237.91.96:3000';
+
+
 
     const form = document.getElementById('formCursos');
+
     const nombre = document.getElementById('nombre');
+
     const correo = document.getElementById('correo');
+
     const telefono = document.getElementById('telefono');
+
     const cursoSeleccionado = document.getElementById('cursoSeleccionado');
+
     const btnEnviar = document.getElementById('btnEnviarInscripcion');
+
     const toastError = document.getElementById('toastError');
+
     const modalGracias = document.getElementById('modalGracias');
+
     const cerrarModal = document.getElementById('cerrarModal');
+
     const staffMsg = document.getElementById('staff-msg');
 
+
+
     function showError(msg) {
+
       toastError.textContent = msg;
+
       toastError.style.display = 'block';
+
     }
+
+
 
     function clearError() {
+
       toastError.textContent = '';
+
       toastError.style.display = 'none';
+
     }
+
+
 
     function openModal() {
+
       modalGracias.style.display = 'flex';
+
     }
+
+
 
     function closeModal() {
+
       modalGracias.style.display = 'none';
+
     }
+
+
 
     cerrarModal.addEventListener('click', closeModal);
+
     modalGracias.addEventListener('click', (e) => {
+
       if (e.target === modalGracias) closeModal();
+
     });
+
+
 
     // Autoselección de curso desde cards
+
     document.querySelectorAll('.btn-inscripcion-trigger').forEach(a => {
+
       a.addEventListener('click', (e) => {
+
         const user = JSON.parse(localStorage.getItem("user") || "{}");
+
         if (user.role === 'admin' || user.role === 'inventarios') {
+
             e.preventDefault();
+
             return;
+
         }
+
         const c = a.getAttribute('data-curso');
+
         cursoSeleccionado.value = c;
+
       });
+
     });
 
+
+
     // --- BLOQUEO PARA STAFF ---
+
     function checkCoursePermission() {
+
         let user = null;
+
         try { user = JSON.parse(localStorage.getItem("user") || "null"); } catch (e) {}
+
         
+
         if (user && (user.role === 'admin' || user.role === 'inventarios')) {
+
             btnEnviar.disabled = true;
+
             btnEnviar.textContent = "Staff no puede inscribirse";
+
             
+
             if(staffMsg) {
-                staffMsg.innerHTML = "🛡️ <strong>Modo Staff:</strong> El personal administrativo tiene restringida la inscripción a cursos públicos.";
+
+                staffMsg.innerHTML = "������️ <strong>Modo Staff:</strong> El personal administrativo tiene restringida la inscripción a cursos públicos.";
+
                 staffMsg.style.color = "#c5a059";
+
             }
 
+
+
             document.querySelectorAll('.btn-inscripcion-trigger').forEach(a => {
+
                 a.classList.remove('btn-gold');
+
                 a.classList.add('btn-outline');
+
                 a.style.opacity = "0.5";
+
                 a.style.cursor = "not-allowed";
+
                 a.textContent = "Restringido";
+
             });
 
+
+
             // Deshabilitar inputs
+
             nombre.disabled = true;
+
             correo.disabled = true;
+
             telefono.disabled = true;
+
             cursoSeleccionado.disabled = true;
+
         }
+
     }
+
     
+
     checkCoursePermission();
 
+
+
     form.addEventListener('submit', async function(e) {
+
       e.preventDefault();
+
       clearError();
 
+
+
       const token = localStorage.getItem("token");
+
       if(!token) {
+
           showError("Debes iniciar sesión para inscribirte.");
+
           return;
+
       }
 
+
+
       let valido = true;
+
       if (!nombre.value.trim()) { valido = false; showError("Ingresa tu nombre."); }
-      if (!esEmailValido(correo.value)) { valido = false; showError("Correo no válido."); }
-      if (!esTelefonoValido(telefono.value)) { valido = false; showError("Teléfono no válido."); }
+
+      //if (!esEmailValido(correo.value)) { valido = false; showError("Correo no válido."); }
+
+      //if (!esTelefonoValido(telefono.value)) { valido = false; showError("Teléfono no válido."); }
+
       if (!cursoSeleccionado.value) { valido = false; showError("Selecciona un curso."); }
+
       if (!valido) return;
 
+
+
       btnEnviar.disabled = true;
+
       const originalText = btnEnviar.textContent;
+
       btnEnviar.textContent = "Enviando...";
 
+
+
       try {
+
+        // CAMBIO 2: ENVIAR courseName EN LUGAR DE courseId
+
         const payload = {
-          courseId: 1, // En un sistema real usarías el ID dinámico
-          schedule: "Sabatino 10:00 - 14:00" // Ejemplo
+
+          courseName: cursoSeleccionado.value
+
         };
 
+
+
         const res = await fetch(`${API_BASE}/api/course-registrations`, {
+
             method: 'POST',
+
             headers: { 
+
                 'Content-Type': 'application/json',
+
                 'Authorization': `Bearer ${token}`
+
             },
+
             body: JSON.stringify(payload)
+
         }); 
+
+
 
         const data = await res.json();
 
+
+
         if (!res.ok) {
+
           throw new Error(data.error || "No se pudo completar el registro.");
+
         }
 
+
+
         form.reset();
+
         openModal();
 
+
+
       } catch (err) {
+
         showError(err.message);
+
       } finally {
+
         btnEnviar.disabled = false;
+
         btnEnviar.textContent = originalText;
-        checkCoursePermission(); // Re-validar por si acaso
+
+        checkCoursePermission(); 
+
       }
+
     });
+
   </script>
 
+
+
 </body>
+
 </html>

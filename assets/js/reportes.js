@@ -1,5 +1,5 @@
-// assets/js/reportes.js
-const API = "http://localhost:3000/api";
+}// assets/js/reportes.js
+const API = "http://3.237.91.96:3000/api/admin/reports";
 
 function qs(id) { return document.getElementById(id); }
 function show(el) { if (el) el.style.display = "block"; }

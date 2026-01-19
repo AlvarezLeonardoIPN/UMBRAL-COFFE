@@ -1,73 +1,191 @@
-const API = "http://localhost:3000/api";
-const params = new URLSearchParams(window.location.search);
-const productId = params.get("id");
+const API = "http://3.237.91.96:3000/api";
+
+const SERVER = "http://3.237.91.96:3000";
+
+
 
 const qs = id => document.getElementById(id);
-const token = () => localStorage.getItem("token");
+
+
 
 async function loadProductDetail() {
-    if (!productId) { window.location.href = "tienda.html"; return; }
+
+    const urlParams = new URLSearchParams(window.location.search);
+
+    const productId = urlParams.get('id');
+
+
+
+    if (!productId) {
+
+        window.location.href = 'tienda.html';
+
+        return;
+
+    }
+
+
 
     try {
+
         const res = await fetch(`${API}/products/${productId}`);
-        const p = await res.json();
-        if (!res.ok) throw new Error();
 
-        qs("p-name").textContent = p.name;
-        qs("p-price").textContent = `$${Number(p.price).toFixed(2)}`;
-        qs("p-desc").textContent = p.description || "Sin descripción disponible.";
-        qs("p-delivery").textContent = `Entrega estimada: ${p.estimated_delivery_days || 3} días`;
+        const product = await res.json();
 
-        // Imagen principal
-        const imgEl = qs("main-img-el");
-        imgEl.src = `http://localhost:3000${p.image_url}`;
 
-        // GALERÍA DE MINIATURAS
-        const gallery = qs("prod-gallery");
-        if (gallery && p.gallery && p.gallery.length > 0) {
-            gallery.innerHTML = p.gallery.map(imgUrl => `
-                <img src="http://localhost:3000${imgUrl}" 
-                     onclick="document.getElementById('main-img-el').src='http://localhost:3000${imgUrl}'"
-                     style="width:70px; height:70px; object-fit:cover; border-radius:10px; cursor:pointer; border:1px solid #333; transition: 0.2s;"
-                     onmouseover="this.style.borderColor='#c5a059'"
-                     onmouseout="this.style.borderColor='#333'">
+
+        // 1. Renderizar Imágenes
+
+        const mainImg = qs("main-img");
+
+        if (mainImg) mainImg.src = SERVER + (product.image_url || '/uploads/default.jpg');
+
+
+
+        const gallery = qs("gallery-container");
+
+        if (gallery && product.gallery) {
+
+            gallery.innerHTML = product.gallery.map(url => `
+
+                <img src="${SERVER}${url}" onclick="document.getElementById('main-img').src=this.src" style="cursor:pointer; width:80px; height:80px; object-fit:cover; border-radius:8px; border:1px solid #333;">
+
             `).join("");
+
         }
 
-        // Validación de Stock
-        const stockEl = qs("p-stock");
+
+
+        // 2. Info Básica
+
+        if (qs("p-name")) qs("p-name").textContent = product.name;
+
+        if (qs("p-price")) qs("p-price").textContent = `$${product.price}`;
+
+        if (qs("p-desc")) qs("p-desc").textContent = product.description;
+
+        if (qs("p-stock")) qs("p-stock").textContent = product.stock > 0 ? `Disponible: ${product.stock}` : 'Agotado';
+
+
+
+        // 3. Estrellas
+
+        renderStars(product.rating_avg);
+
+
+
+        // 4. Reseñas (LA FUNCIÓN QUE FALTABA)
+
+        loadReviews(product.reviews);
+
+
+
+        // 5. Botón Agregar
+
         const btnAdd = qs("btn-add-cart");
-        if (p.stock > 0) {
-            stockEl.innerHTML = `✅ Unidades: <strong>${p.stock}</strong>`;
-            btnAdd.disabled = false;
-        } else {
-            stockEl.innerHTML = `❌ Agotado`;
-            btnAdd.disabled = true;
-            btnAdd.textContent = "SIN STOCK";
+
+        if (btnAdd) {
+
+            btnAdd.onclick = () => addToCart(product);
+
         }
 
-        renderStars(p.rating_promedio || 0);
-        loadReviews();
-    } catch (e) { console.error(e); }
-}
 
-// ... (las funciones renderStars, loadReviews y sendReview se quedan igual)
 
-function addToCart(id) {
-    let cart = JSON.parse(localStorage.getItem("umbral_cart")) || [];
-    const exists = cart.find(it => it.productId === id);
-    if (exists) exists.quantity += 1;
-    else cart.push({ productId: id, quantity: 1 });
-    localStorage.setItem("umbral_cart", JSON.stringify(cart));
-    alert("Producto añadido al carrito");
-}
+    } catch (e) {
 
-document.addEventListener("DOMContentLoaded", () => {
-    loadProductDetail();
-    if (token()) {
-        if(qs("review-form-container")) qs("review-form-container").style.display = "block";
-        if(qs("login-to-review")) qs("login-to-review").style.display = "none";
+        console.error("Error cargando detalle:", e);
+
     }
-    if(qs("btn-send-review")) qs("btn-send-review").onclick = sendReview;
-    if(qs("btn-add-cart")) qs("btn-add-cart").onclick = () => addToCart(productId);
-});
+
+}
+
+
+
+function renderStars(rating) {
+
+    const container = qs("stars-container");
+
+    if (!container) return;
+
+    const r = Math.round(rating || 0);
+
+    container.innerHTML = '★'.repeat(r) + '☆'.repeat(5 - r);
+
+}
+
+
+
+function loadReviews(reviews) {
+
+    const container = qs("reviews-container");
+
+    if (!container) return;
+
+    if (!reviews || reviews.length === 0) {
+
+        container.innerHTML = "<p>No hay reseñas aún.</p>";
+
+        return;
+
+    }
+
+    container.innerHTML = reviews.map(r => `
+
+        <div class="review-card" style="border-bottom:1px solid #222; padding:10px 0;">
+
+            <strong>${r.user_name}</strong> <span>${'★'.repeat(r.rating)}</span>
+
+            <p style="margin:5px 0; opacity:0.8;">${r.comment}</p>
+
+        </div>
+
+    `).join("");
+
+}
+
+
+
+function addToCart(p) {
+
+    let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+    const item = {
+
+        id: p.id,
+
+        name: p.name,
+
+        price: parseFloat(p.price),
+
+        image: p.image_url,
+
+        qty: 1
+
+    };
+
+    
+
+    const exists = cart.find(i => i.id === p.id);
+
+    if (exists) {
+
+        exists.qty++;
+
+    } else {
+
+        cart.push(item);
+
+    }
+
+    
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    alert("¡Añadido al carrito!");
+
+}
+
+
+
+document.addEventListener("DOMContentLoaded", loadProductDetail);

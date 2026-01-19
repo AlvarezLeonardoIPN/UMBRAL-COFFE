@@ -1,82 +1,165 @@
 <!DOCTYPE html>
+
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mis Pedidos | UMBRAL</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <style>
-        body {
-            background-color: #0d0d0d;
-            color: #fff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        .container {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        .header h1 {
-            color: #c5a059;
-            font-size: 2.5rem;
-            letter-spacing: 2px;
-        }
-        .card {
-            background: #1a1a1a;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(197, 160, 89, 0.2);
-            transition: transform 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: #c5a059;
-        }
-        .error-msg {
-            background: #441a1a;
-            color: #ff8080;
-            padding: 15px;
-            border-radius: 8px;
-            display: none;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .btn-regresar {
-            display: inline-block;
-            margin-bottom: 20px;
-            color: #c5a059;
-            text-decoration: none;
-            font-weight: bold;
-        }
-    </style>
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Mis Pedidos | UMBRAL</title>
+
+  <link rel="stylesheet" href="assets/css/style.css" />
+
+  <style>
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 18px; }
+
+    .orders-grid { display: grid; gap: 20px; margin-top: 30px; }
+
+    /* Estilo para las tarjetas de pedido que genera el JS */
+
+    .order-card {
+
+      background: rgba(10,10,10,0.8);
+
+      border: 1px solid rgba(212,175,55,0.2);
+
+      border-radius: 18px;
+
+      padding: 24px;
+
+      transition: transform 0.2s ease;
+
+    }
+
+    .order-card:hover { border-color: rgba(212,175,55,0.5); }
+
+    .order-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; padding-bottom: 15px; margin-bottom: 15px; }
+
+    .order-id { color: #c5a059; font-weight: bold; letter-spacing: 1px; }
+
+    .order-status { font-size: 12px; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; background: #222; color: #fff; }
+
+  </style>
+
 </head>
+
 <body>
 
-    <div class="container">
-        <a href="tienda.html" class="btn-regresar">← Volver a la Tienda</a>
 
-        <div class="header">
-            <h1>MIS PEDIDOS</h1>
-            <p style="opacity: 0.7;">Historial de tus compras en la arquitectura líquida.</p>
+
+  <header class="header">
+
+    <div class="header-inner">
+
+      <div class="logo">
+
+        <span class="logo-mark">⚜</span>
+
+        <span class="logo-text">UMBRAL</span>
+
+      </div>
+
+      <nav class="nav">
+
+        <a href="index.html">Inicio</a>
+
+        <a href="tienda.html">Tienda</a>
+
+        <a href="mis_pedidos.html" class="active">Mis pedidos</a>
+
+      </nav>
+
+      <div class="header-actions">
+
+        <div class="umbral-account" id="umbral-account">
+
+          <button type="button" class="umbral-account-btn" id="umbral-account-btn">
+
+            Hola, <span id="umbral-account-name">Usuario</span> ▾
+
+          </button>
+
+          <div class="umbral-dropdown" id="umbral-dropdown" style="display:none;">
+
+            <a href="cuenta.html">Mi cuenta</a>
+
+            <button type="button" class="umbral-logout" id="umbral-logout">Cerrar sesión</button>
+
+          </div>
+
         </div>
 
-        <div id="orders-error" class="error-msg"></div>
+      </div>
 
-        <div id="orders-list">
-            <p style="text-align: center; opacity: 0.5;">Cargando tus pedidos...</p>
-        </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  </header>
 
-    <script src="assets/js/auth_ui.js"></script>
 
-    <script src="assets/js/mis_pedidos.js"></script>
+
+  <main>
+
+    <section class="hero hero-login">
+
+      <div class="container hero-content">
+
+        <p class="overline">HISTORIAL</p>
+
+        <h1>Mis Pedidos</h1>
+
+        <p class="hero-subtitle">Consulta el estado de tus compras y descarga tus tickets.</p>
+
+      </div>
+
+    </section>
+
+
+
+    <div class="container">
+
+      <div id="orders-container" class="orders-grid">
+
+        <p style="color: #666; text-align: center; margin-top: 50px;">Cargando tus pedidos...</p>
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+
+  <footer class="footer">
+
+    <div class="footer-inner">
+
+      <p>&copy; 2026 UMBRAL. Arquitectura líquida.</p>
+
+    </div>
+
+  </footer>
+
+
+
+  <script src="assets/js/auth_ui.js"></script>
+
+  <script src="assets/js/guards.js"></script>
+
+  <script>
+
+    // Bloqueo si no hay sesión
+
+    if(!localStorage.getItem("token")) window.location.href = "login.html";
+
+  </script>
+
+  <script src="assets/js/mis_pedidos.js"></script>
+
+
 
 </body>
+
 </html>

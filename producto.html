@@ -1,115 +1,135 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Producto | UMBRAL</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <style>
-        .product-container { max-width: 1000px; margin: 50px auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 20px; }
-        
-        /* Galería de Imágenes */
-        .product-image-side { display: flex; flex-direction: column; gap: 15px; }
-        .main-image-container { width: 100%; position: relative; }
-        .main-image-container img { width: 100%; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); object-fit: cover; aspect-ratio: 1/1; }
-        
-        #prod-gallery { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: thin; }
-        #prod-gallery img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid transparent; transition: 0.3s; opacity: 0.6; }
-        #prod-gallery img:hover { opacity: 1; border-color: #c5a059; }
-        #prod-gallery img.active { opacity: 1; border-color: #c5a059; }
 
-        /* Información del Producto */
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Producto | UMBRAL</title>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <style>
+
+        .product-container { max-width: 1000px; margin: 50px auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 20px; }
+
+        .product-image-side { display: flex; flex-direction: column; gap: 15px; }
+
+        .main-image-container img { width: 100%; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); object-fit: cover; aspect-ratio: 1/1; }
+
         .product-info h1 { font-family: 'Playfair Display', serif; color: #c5a059; font-size: 2.5rem; margin: 0; }
+
         .category-tag { text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; color: #888; margin-bottom: 10px; display: block; }
+
         .price { font-size: 2.2rem; font-weight: bold; margin: 15px 0; color: #fff; }
+
         .delivery-tag { color: #c5a059; font-weight: 600; display: flex; align-items: center; gap: 8px; margin-bottom: 15px; font-size: 0.9rem; }
-        .stock-tag { margin-bottom: 25px; padding: 8px 12px; border-radius: 6px; display: inline-block; font-size: 0.85rem; background: rgba(255,255,255,0.05); }
-        
-        .qty-selector { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+
         .qty-selector input { width: 60px; padding: 10px; background: #222; border: 1px solid #333; color: #fff; border-radius: 6px; text-align: center; }
 
-        .btn-add { background: #c5a059; color: #000; border: none; padding: 18px 30px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
-        .btn-add:hover { background: #e0b86d; transform: translateY(-2px); }
-        .btn-add:disabled { background: #444; color: #888; cursor: not-allowed; transform: none; }
-        
-        /* Sección de Reseñas */
-        .reviews-section { max-width: 1000px; margin: 40px auto; padding: 20px; border-top: 1px solid #222; }
-        .review-card { background: #161616; padding: 20px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #222; }
-        .star-rating { color: #f5c46b; margin-bottom: 8px; font-size: 1.1rem; }
-        
-        .review-form { background: #1a1a1a; padding: 25px; border-radius: 15px; border: 1px solid #c5a05933; }
-        .review-form select, .review-form textarea { width: 100%; background: #0d0d0d; border: 1px solid #333; color: #fff; padding: 12px; border-radius: 8px; margin: 10px 0; box-sizing: border-box; }
-        .review-form textarea { resize: vertical; }
+        .btn-add { background: #c5a059; color: #000; border: none; padding: 18px 30px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; font-size: 1.1rem; text-transform: uppercase; transition: 0.3s; }
 
-        @media (max-width: 768px) {
-            .product-container { grid-template-columns: 1fr; margin: 20px auto; }
-        }
+        .reviews-section { max-width: 1000px; margin: 40px auto; padding: 20px; border-top: 1px solid #222; }
+
+        .review-card { background: #161616; padding: 20px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #222; }
+
+        .review-form { background: #1a1a1a; padding: 25px; border-radius: 15px; border: 1px solid #c5a05933; }
+
+        .review-form select, .review-form textarea { width: 100%; background: #0d0d0d; border: 1px solid #333; color: #fff; padding: 12px; border-radius: 8px; margin: 10px 0; }
+
     </style>
+
 </head>
+
 <body style="background: #0d0d0d; color: #fff; font-family: 'Inter', sans-serif;">
 
     <div class="product-container">
+
         <div class="product-image-side">
-            <div class="main-image-container" id="p-image">
-                <img id="main-img-el" src="assets/img/product-placeholder.jpg" alt="Cargando...">
+
+            <div class="main-image-container">
+
+                <img id="main-img-el" src="assets/img/placeholder.jpg" alt="Cargando...">
+
             </div>
-            <div id="prod-gallery"></div>
+
         </div>
 
         <div class="product-info">
+
             <span id="prod-category" class="category-tag">Categoría</span>
+
             <h1 id="p-name">Cargando...</h1>
-            <div id="p-stars" class="star-rating"></div>
-            
+
+            <div id="p-stars" class="star-rating" style="color:#f5c46b; margin-bottom:8px;"></div>
+
             <p class="price" id="p-price">$0.00</p>
-            
+
             <div class="delivery-tag">
-                <span>🚚</span> <span id="p-delivery">Entrega estimada: -- días</span>
+
+                <span>������</span> <span id="p-delivery">Calculando entrega...</span>
+
             </div>
 
-            <div class="stock-tag" id="p-stock">Verificando existencias...</div>
-            
             <p id="p-desc" style="line-height: 1.8; opacity: 0.7; margin-bottom: 30px; font-size: 1rem;"></p>
 
             <div class="qty-selector">
+
                 <label>Cantidad:</label>
+
                 <input type="number" id="prod-qty" value="1" min="1">
+
             </div>
 
             <button class="btn-add" id="btn-add-cart">Añadir al carrito</button>
+
         </div>
+
     </div>
+
+
 
     <div class="reviews-section">
-        <h3 style="font-family: 'Playfair Display', serif; color: #c5a059; margin-bottom: 25px;">Experiencias de la comunidad</h3>
-        
-        <div id="review-form-container" class="review-form" style="display: none; margin-bottom: 40px;">
-            <h4 style="margin-top: 0;">Comparte tu opinión</h4>
-            <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 10px;">
-                <label>Calificación:</label>
-                <select id="r-rating" style="width: auto;">
-                    <option value="5">5 ★ (Excelente)</option>
-                    <option value="4">4 ★ (Muy bueno)</option>
-                    <option value="3">3 ★ (Bueno)</option>
-                    <option value="2">2 ★ (Regular)</option>
-                    <option value="1">1 ★ (Malo)</option>
-                </select>
-            </div>
-            <textarea id="r-comment" rows="4" placeholder="¿Qué te pareció este producto? Tu reseña ayuda a otros..."></textarea>
-            <button class="btn-primario" id="btn-send-review" style="width: auto; padding: 12px 30px;">Publicar Reseña</button>
+
+        <h3 style="color: #c5a059; margin-bottom: 25px;">Experiencias de la comunidad</h3>
+
+        <div id="reviews-list"></div>
+
+
+
+        <div id="review-form-container" class="review-form" style="display: none; margin-top: 30px;">
+
+            <h4>Escribir reseña</h4>
+
+            <select id="r-rating">
+
+                <option value="5">5 ★ (Excelente)</option><option value="4">4 ★</option><option value="3">3 ★</option><option value="2">2 ★</option><option value="1">1 ★</option>
+
+            </select>
+
+            <textarea id="r-comment" rows="4" placeholder="Tu opinión..."></textarea>
+
+            <button id="btn-send-review" class="btn-primario" style="background:#c5a059; border:0; padding:10px 20px; border-radius:8px; cursor:pointer;">Publicar</button>
+
         </div>
 
-        <div id="login-to-review" style="margin-bottom: 30px; padding: 20px; border: 1px dashed #333; border-radius: 10px; text-align: center; opacity: 0.6;">
-            <p>Para dejar una recomendación, debes <a href="login.html" style="color: #c5a059;">iniciar sesión</a>.</p>
+
+
+        <div id="login-to-review" style="text-align: center; padding: 20px; border: 1px dashed #333; margin-top: 20px;">
+
+            <p>Para dejar una reseña, <a href="login.html" style="color: #c5a059;">inicia sesión</a>.</p>
+
         </div>
 
-        <div id="reviews-list">
-            <p style="opacity: 0.5;">Cargando comentarios...</p>
-        </div>
     </div>
 
-    <script src="assets/js/auth_ui.js"></script>
-    <script src="assets/js/cart_ui.js"></script>
+
+
     <script src="assets/js/producto.js"></script>
+
 </body>
+
 </html>

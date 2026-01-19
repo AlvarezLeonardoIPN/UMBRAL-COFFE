@@ -1,5 +1,5 @@
 // assets/js/reviews_ui.js
-const API = "http://localhost:3000/api";
+const API = "http://3.237.91.96:3000/api/auth/register";
 
 function qs(id){ return document.getElementById(id); }
 function show(el){ if(el) el.style.display = "block"; }

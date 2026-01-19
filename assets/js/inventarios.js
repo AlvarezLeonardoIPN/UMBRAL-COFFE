@@ -1,5 +1,5 @@
 // assets/js/inventarios.js
-const API = "http://localhost:3000/api";
+const API = "http://3.237.91.96:3000/api/admin/inventory";
 
 const qs = (id) => document.getElementById(id);
 const token = () => localStorage.getItem("token");

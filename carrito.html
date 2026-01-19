@@ -1,295 +1,545 @@
 <!DOCTYPE html>
+
 <html lang="es">
+
 <head>
+
   <meta charset="UTF-8" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Carrito | UMBRAL</title>
+
   <link rel="stylesheet" href="assets/css/style.css" />
 
+
+
   <style>
+
     .container { max-width: 1200px; margin: 0 auto; padding: 0 18px; }
 
+
+
     /* Layout */
+
     .cart-section { padding: 34px 0 70px; }
+
     .cart-layout {
+
       display: grid;
+
       grid-template-columns: 1.6fr 1fr;
+
       gap: 22px;
+
       align-items: start;
+
     }
+
     @media (max-width: 980px) {
+
       .cart-layout { grid-template-columns: 1fr; }
+
     }
+
+
 
     /* Cards / glass */
+
     .umbral-card {
+
       border-radius: 22px;
+
       background: rgba(10,10,10,0.70);
+
       border: 1px solid rgba(212,175,55,0.18);
+
       box-shadow: 0 26px 80px rgba(0,0,0,0.55);
+
       overflow: hidden;
+
     }
+
     .umbral-card-head {
+
       padding: 18px 18px 14px;
+
       border-bottom: 1px solid rgba(212,175,55,0.10);
+
       display:flex;
+
       justify-content: space-between;
+
       align-items:center;
+
       gap: 14px;
+
     }
+
     .umbral-card-title {
+
       margin: 0;
+
       font-size: 13px;
+
       letter-spacing: 2.5px;
+
       text-transform: uppercase;
+
       color: rgba(212,175,55,0.92);
+
     }
+
     .umbral-card-sub {
+
       margin: 0;
+
       font-size: 12px;
+
       color: rgba(255,255,255,0.55);
+
     }
+
     .umbral-card-body { padding: 18px; }
 
+
+
     /* Error banner */
+
     .umbral-alert {
+
       display:none;
+
       padding: 12px 14px;
+
       border-radius: 16px;
+
       border: 1px solid rgba(255, 85, 85, 0.35);
+
       background: rgba(255, 85, 85, 0.08);
+
       color: rgba(255, 220, 220, 0.95);
+
       font-size: 13px;
+
       line-height: 1.4;
+
       margin-bottom: 14px;
+
     }
+
+
 
     /* Summary sticky */
+
     .cart-summary {
+
       position: sticky;
+
       top: 90px;
+
     }
+
+
 
     /* Summary rows */
+
     .summary-row {
+
       display:flex;
+
       justify-content: space-between;
+
       gap: 12px;
+
       align-items: baseline;
+
       padding: 10px 0;
+
       border-bottom: 1px solid rgba(255,255,255,0.06);
+
     }
+
     .summary-row:last-child { border-bottom: 0; }
+
     .summary-label {
+
       color: rgba(255,255,255,0.70);
+
       font-size: 13px;
+
     }
+
     .summary-value {
+
       color: #f2f2f2;
+
       font-weight: 700;
+
       font-size: 14px;
+
     }
+
     .summary-total {
+
       font-size: 26px;
+
       font-weight: 800;
+
       letter-spacing: 0.3px;
+
       color: #f7f7f7;
+
     }
+
+
 
     /* CTA */
+
     .cta-grid {
+
       display:grid;
+
       grid-template-columns: 1fr;
+
       gap: 10px;
+
       margin-top: 14px;
+
     }
+
     
+
     .btn-primario {
+
       border: 0;
+
       border-radius: 999px;
+
       padding: 14px 18px;
+
       cursor: pointer;
+
       background: rgba(212,175,55,0.92);
+
       color: #111;
+
       font-weight: 800;
+
       letter-spacing: 1.2px;
+
       text-transform: uppercase;
+
       text-decoration: none;
+
       display:flex;
+
       align-items:center;
+
       justify-content:center;
+
       transition: transform .15s ease, filter .15s ease;
+
     }
+
     .btn-primario:hover { transform: translateY(-1px); filter: brightness(1.04); }
 
-    /* Estilo para botón deshabilitado (Staff) */
-    .btn-primario:disabled {
-      background: #333 !important;
-      color: #666 !important;
-      cursor: not-allowed !important;
-      transform: none !important;
-      filter: grayscale(1) !important;
+
+
+    .btn-outline {
+
+        border: 1px solid #444; background: transparent; color: #ccc;
+
+        padding: 10px 15px; border-radius: 999px; cursor: pointer;
+
+        display:flex; justify-content:center; align-items:center; text-decoration: none;
+
     }
 
-    /* Alerta de Staff */
-    #staff-block-msg {
-      display: none;
-      background: rgba(197, 160, 89, 0.1);
-      border: 1px solid #c5a059;
-      padding: 12px;
-      border-radius: 12px;
-      margin-bottom: 15px;
-      font-size: 12px;
-      color: #ddd;
-      text-align: center;
+
+
+    /* Estilo para botón deshabilitado (Staff) */
+
+    .btn-primario:disabled {
+
+      background: #333 !important;
+
+      color: #666 !important;
+
+      cursor: not-allowed !important;
+
+      transform: none !important;
+
+      filter: grayscale(1) !important;
+
     }
+
+
+
+    /* Alerta de Staff */
+
+    #staff-block-msg {
+
+      display: none;
+
+      background: rgba(197, 160, 89, 0.1);
+
+      border: 1px solid #c5a059;
+
+      padding: 12px;
+
+      border-radius: 12px;
+
+      margin-bottom: 15px;
+
+      font-size: 12px;
+
+      color: #ddd;
+
+      text-align: center;
+
+    }
+
   </style>
+
 </head>
+
+
 
 <body>
 
+
+
 <header class="header">
+
   <div class="header-inner">
+
     <div class="logo">
+
       <span class="logo-mark">⚜</span>
+
       <span class="logo-text">UMBRAL</span>
+
     </div>
+
+
 
     <nav class="nav">
+
       <a href="index.html">Inicio</a>
+
       <a href="tienda.html">Tienda</a>
+
       <a href="mis_pedidos.html" id="nav-mis-pedidos" style="display:none;">Mis pedidos</a>
+
     </nav>
 
+
+
     <div class="header-actions">
+
       <a href="tienda.html" class="btn btn-outline">Seguir comprando</a>
 
+
+
       <div class="umbral-account" id="umbral-account" style="display:none;">
+
         <button type="button" class="umbral-account-btn" id="umbral-account-btn">
+
           Hola, <span id="umbral-account-name">Usuario</span>
+
           <span class="umbral-caret">▾</span>
+
         </button>
 
+
+
         <div class="umbral-dropdown" id="umbral-dropdown" style="display:none;">
+
           <a href="mis_pedidos.html">Mis pedidos</a>
+
           <a href="cuenta.html">Mi cuenta</a>
+
           <a href="inventarios.html" id="umbral-link-inventarios" style="display:none;">Inventarios</a>
+
           <a href="admin.html" id="umbral-link-admin" style="display:none;">Administrador</a>
+
           <div class="umbral-sep"></div>
+
           <button type="button" class="umbral-logout" id="umbral-logout">Cerrar sesion</button>
+
         </div>
+
       </div>
+
+
 
       <a href="login.html" class="link-login" id="umbral-login-link">Login</a>
+
     </div>
+
   </div>
+
 </header>
 
+
+
 <main>
+
   <section class="hero hero-login">
+
     <div class="container hero-content">
+
       <p class="overline">CARRITO</p>
+
       <h1>Tu carrito</h1>
+
       <p class="hero-subtitle">Revisa cantidades, elimina productos y confirma tu compra.</p>
+
     </div>
+
   </section>
+
+
 
   <section class="cart-section">
+
     <div class="container">
+
       <p id="cart-error" class="umbral-alert"></p>
 
+
+
       <div class="cart-layout">
+
         <div class="umbral-card">
+
           <div class="umbral-card-head">
+
             <div>
+
               <p class="umbral-card-title">Productos</p>
+
               <p class="umbral-card-sub">Ajusta cantidad y revisa detalles.</p>
+
             </div>
+
           </div>
 
+
+
           <div class="umbral-card-body">
+
             <div id="cart-empty" class="cart-empty" style="display:none; text-align:center; padding: 40px;">
+
               Tu carrito está vacío. Vuelve a la tienda y elige un café ☕
+
             </div>
+
             <div id="cart-items"></div>
+
+            
+
             <p class="cart-note" style="margin-top:20px; font-style:italic; opacity:0.6; font-size:11px;">
+
               Nota: el stock se valida al confirmar compra.
+
             </p>
+
           </div>
+
         </div>
+
+
 
         <div class="umbral-card cart-summary">
+
           <div class="umbral-card-head">
+
             <p class="umbral-card-title">Resumen del pedido</p>
+
           </div>
+
+
 
           <div class="umbral-card-body">
+
             <div id="staff-block-msg">
-                🛡️ <strong>Modo Staff Activo:</strong> El personal administrativo tiene restringida la compra de productos comerciales.
+
+                ������️ <strong>Modo Staff Activo:</strong> El personal administrativo tiene restringida la compra de productos comerciales.
+
             </div>
+
+
 
             <div class="summary-row">
+
               <div class="summary-label">Subtotal</div>
+
               <div class="summary-value" id="cart-subtotal">$0.00</div>
+
             </div>
+
+
 
             <div class="summary-row" style="padding-top:14px;">
+
               <div class="summary-label">Total</div>
+
               <div class="summary-total" id="cart-total">$0.00</div>
+
             </div>
+
+
 
             <div class="cta-grid">
+
               <button id="btn-checkout" class="btn-primario">
-                Ir a pagar
+
+                Proceder al Pago
+
               </button>
+
               <button id="btn-clear" type="button" class="btn btn-outline">
+
                 Vaciar carrito
+
               </button>
+
             </div>
+
           </div>
+
         </div>
+
       </div>
+
     </div>
+
   </section>
+
 </main>
 
+
+
 <footer class="footer">
+
   <div class="footer-inner">
-    <p>&copy; 2025 UMBRAL. Arquitectura liquida.</p>
+
+    <p>&copy; 2026 UMBRAL. Arquitectura liquida.</p>
+
   </div>
+
 </footer>
 
+
+
 <script src="assets/js/auth_ui.js"></script>
-<script src="assets/js/cart_ui.js"></script>
+
 <script src="assets/js/carrito.js"></script>
 
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
-    const btnPay = document.getElementById("btn-checkout");
-    const staffMsg = document.getElementById("staff-block-msg");
 
-    // Lógica de bloqueo de Checkout para Staff
-    if (user.role === 'admin' || user.role === 'inventarios') {
-        if (btnPay) {
-            btnPay.disabled = true;
-            btnPay.textContent = "Staff no puede comprar";
-        }
-        if (staffMsg) staffMsg.style.display = "block";
-    } else {
-        // Solo si es cliente permitimos navegar al checkout
-        if (btnPay) {
-            btnPay.addEventListener("click", () => {
-                window.location.href = "checkout.html";
-            });
-        }
-    }
-
-    // Mostrar error si existe
-    const cartErr = document.getElementById('cart-error');
-    if (cartErr && cartErr.textContent.trim()) cartErr.style.display = 'block';
-  });
-</script>
 
 </body>
+
 </html>

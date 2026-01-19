@@ -1,5 +1,5 @@
 // login.js
-const API_BASE_URL = "http://localhost:3000/api";
+const API_BASE_URL = "http://3.237.91.96:3000/api/auth/login";
 
 const form = document.getElementById("login-form");
 const emailInput = document.getElementById("email");
@@ -92,7 +92,7 @@ async function handleCredentialResponse(response) {
   
   try {
     // Enviamos el token de Google a NUESTRO backend
-    const res = await fetch("http://localhost:3000/api/auth/google", {
+    const res = await fetch("http://http://3.237.91.96:3000/api/auth/google", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token: response.credential })
